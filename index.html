@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AstroGlow: Orbital Sunset & Twilight Time Visualizer</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header class="app-header">
+        <div class="logo">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+            <h1>AstroGlow</h1>
+        </div>
+        <p class="tagline">Interactive Twilight & Atmospheric Scattering Simulator</p>
+    </header>
+
+    <main class="main-container">
+        <section class="control-panel" aria-labelledby="control-heading">
+            <h2 id="control-heading" class="sr-only">Simulation Controls</h2>
+            
+            <div class="control-group">
+                <label for="location-preset">Observation Location</label>
+                <select id="location-preset">
+                    <option value="40.7128,-74.0060">New York City, USA (40.7° N)</option>
+                    <option value="51.5074,-0.1278">London, UK (51.5° N)</option>
+                    <option value="35.6762,139.6503">Tokyo, Japan (35.6° N)</option>
+                    <option value="-33.8688,151.2093">Sydney, Australia (33.8° S)</option>
+                    <option value="64.2008,-149.4937">Fairbanks, Alaska (64.8° N)</option>
+                    <option value="0.0,36.8219">Nairobi, Kenya (Equator)</option>
+                    <option value="custom">Custom Coordinates</option>
+                </select>
+            </div>
+
+            <div id="custom-coords" class="control-group hidden">
+                <div class="coord-inputs">
+                    <div>
+                        <label for="lat-input">Latitude (°)</label>
+                        <input type="number" id="lat-input" min="-90" max="90" step="0.1" value="40.7">
+                    </div>
+                    <div>
+                        <label for="lon-input">Longitude (°)</label>
+                        <input type="number" id="lon-input" min="-180" max="180" step="0.1" value="-74.0">
+                    </div>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label for="day-of-year">Time of Year (Day 1 - 365)</label>
+                <input type="range" id="day-of-year" min="1" max="365" value="172">
+                <div class="range-val" id="date-display">June 21 (Summer Solstice)</div>
+            </div>
+
+            <div class="control-group time-scrubber-group">
+                <div class="time-header">
+                    <label for="time-slider">Solar Time (UTC)</label>
+                    <span id="time-display">12:00 PM</span>
+                </div>
+                <input type="range" id="time-slider" min="0" max="1440" step="1" value="720">
+                <div class="playback-controls">
+                    <button id="play-btn" class="btn" aria-label="Play simulation">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                        Play
+                    </button>
+                    <button id="reset-btn" class="btn secondary">Now / Noon</button>
+                </div>
+            </div>
+
+            <div class="sun-stats">
+                <div class="stat-card">
+                    <span class="stat-label">Solar Elevation</span>
+                    <span id="stat-elevation" class="stat-value">--</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-label">Phase</span>
+                    <span id="stat-phase" class="stat-value">--</span>
+                </div>
+            </div>
+        </section>
+
+        <section class="visualization-workspace">
+            <div class="canvas-wrapper">
+                <canvas id="sky-canvas" width="800" height="450" aria-label="Atmospheric sky simulation canvas" role="img"></canvas>
+                <div class="sky-overlay-info">
+                    <div id="current-phase-badge" class="badge">Daylight</div>
+                </div>
+            </div>
+
+            <div class="timeline-phases">
+                <h3>Solar Events Timeline (Today)</h3>
+                <div class="timeline-grid" id="timeline-grid">
+                    <!-- Populated dynamically via JS -->
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="app-footer">
+        <p>AstroGlow &bull; Pure HTML5 Canvas & Astronomical Calculation Engine</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
